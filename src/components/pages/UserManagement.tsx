@@ -7,6 +7,8 @@ import { Spinner } from "@chakra-ui/spinner";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { UserDetailModal } from "../organisms/user/UserDetailModal";
 import { useSelectUser } from "../../hooks/useSelectUser";
+import { UseLoginuser } from "../../hooks/useLoginUser";
+import { Login } from "./Login";
 
 
 export const UserManagement: VFC = memo(() => {
@@ -14,7 +16,7 @@ export const UserManagement: VFC = memo(() => {
     const { getUsers, loading, users} = UseAllUsers();
     const {isOpen, onOpen, onClose} = useDisclosure();
     const {onSelecter, selectedUser} = useSelectUser();
-    console.log(selectedUser);
+    const { loginUser } = UseLoginuser();
 
     useEffect(() => getUsers(), []);
 
@@ -43,7 +45,7 @@ export const UserManagement: VFC = memo(() => {
                 ))}
             </Wrap> 
             )}
-            <UserDetailModal user={selectedUser} isOpen={isOpen} onClose={onClose}/>
+            <UserDetailModal user={selectedUser} isAdmin={loginUser?.isAdmin} isOpen={isOpen} onClose={onClose}/>
         </>
     );
 });
